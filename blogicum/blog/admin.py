@@ -27,7 +27,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 5, 'cols': 50})},
-    } # уменьшил поле текста сообщения для лучшего восприятия
+    }  # уменьшил поле текста сообщения для лучшего восприятия
     list_display = (
         'is_published',
         'author',
