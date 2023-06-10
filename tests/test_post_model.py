@@ -4,7 +4,7 @@ from django.db.models import (
     BooleanField, CharField, DateTimeField, ForeignKey, TextField)
 from django.db.utils import IntegrityError
 
-from conftest import _TestModelAttrs
+from tests.conftest import _TestModelAttrs
 
 pytestmark = [
     pytest.mark.django_db,
