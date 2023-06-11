@@ -17,3 +17,10 @@ class TimeCreatedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class SortingModel(models.Model):
+    class Meta:
+        # Не уверен, по какому полю тут нужна сортировка, пусть будет по дате.
+        ordering = ['-pub_date']
+        abstract = True

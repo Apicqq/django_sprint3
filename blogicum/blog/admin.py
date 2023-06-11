@@ -1,8 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group, User
 from django.db import models
 from django.forms import Textarea
 
-from .models import Category, Location, Post
+from blog.models import Category, Location, Post
 
 admin.site.empty_value_display = 'Не задано'
 
@@ -47,4 +49,14 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
 
 
+class AdminUser(BaseUserAdmin):
+    list_display = ('username', 'email', 'password', 'is_staff',)
+    search_fields = ('email',)
+    ordering = ('username',)
+    list_display_links = ('username',)
+
+
+admin.site.unregister(Group)
+admin.site.unregister(User)
 admin.site.register(Location)
+admin.site.register(User, AdminUser)
