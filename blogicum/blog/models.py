@@ -56,7 +56,6 @@ class Category(BaseModel):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
-
     def __str__(self):
         return self.title[:30]
 
