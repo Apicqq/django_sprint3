@@ -1,6 +1,3 @@
-from datetime import datetime as dt
-
-from blog.models import Category, Post
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.utils.timezone import now
@@ -20,18 +17,22 @@ def index(request):
 
 
 def category_posts(request, category_slug):
-    category = get_object_or_404(Category.objects.filter(
-        is_published=True), slug=category_slug)
-
-    post_list = category.posts.filter(
+    category = get_object_or_404(
+        Category.objects.all(),
         is_published=True,
-        pub_date__lte=now())
+        slug=category_slug
+    )
+
+    post_list = category.category_posts.filter(
+        is_published=True,
+        pub_date__lte=now()
+    )
 
     context = {'post_list': post_list, 'category': category}
     return render(request, 'blog/category.html', context)
 
 
-def post_pk(request, pk):
+def post_detail(request, pk):
     post = get_object_or_404(
         Post,
         is_published=True,

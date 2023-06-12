@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from core.models import PublishedModel, SortingModel, TimeCreatedModel
+from core.models import BaseModel
 
 User = get_user_model()
 
 
-class Post(PublishedModel, TimeCreatedModel):
+class Post(BaseModel):
     title = models.CharField('Заголовок', max_length=256)
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
@@ -18,7 +18,7 @@ class Post(PublishedModel, TimeCreatedModel):
         User,
         on_delete=models.CASCADE,
         verbose_name='Автор публикации',
-        related_name='authors'
+        related_name='author_posts'
     )
     location = models.ForeignKey(
         'Location',
@@ -26,17 +26,17 @@ class Post(PublishedModel, TimeCreatedModel):
         blank=True,
         null=True,
         verbose_name='Местоположение',
-        related_name='locations'
+        related_name='location_posts'
     )
     category = models.ForeignKey(
         'Category',
         on_delete=models.SET_NULL,
         null=True,
         verbose_name='Категория',
-        related_name='posts',
+        related_name='category_posts'
     )
 
-    class Meta(SortingModel.Meta):
+    class Meta(BaseModel.Meta):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
 
@@ -44,7 +44,7 @@ class Post(PublishedModel, TimeCreatedModel):
         return self.title[:30]
 
 
-class Category(PublishedModel, TimeCreatedModel):
+class Category(BaseModel):
     title = models.CharField('Заголовок', max_length=256)
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
@@ -58,10 +58,10 @@ class Category(PublishedModel, TimeCreatedModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title
+        return self.title[:30]
 
 
-class Location(PublishedModel, TimeCreatedModel):
+class Location(BaseModel):
     name = models.CharField('Название места', max_length=256)
 
     class Meta:
@@ -69,4 +69,4 @@ class Location(PublishedModel, TimeCreatedModel):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name
+        return self.name[:30]
