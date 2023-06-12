@@ -37,6 +37,7 @@ class Post(BaseModel):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         default_related_name = 'posts'
+        ordering = ['-pub_date']
 
     def __str__(self):
         return self.title[:30]
@@ -54,6 +55,7 @@ class Category(BaseModel):
     class Meta(BaseModel.Meta):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
+
 
     def __str__(self):
         return self.title[:30]

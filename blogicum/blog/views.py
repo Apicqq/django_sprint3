@@ -18,7 +18,7 @@ def index(request):
 
 def category_posts(request, category_slug):
     category = get_object_or_404(
-        Category.objects.all(),
+        Category,
         is_published=True,
         slug=category_slug
     )
