@@ -18,7 +18,6 @@ class Post(BaseModel):
         User,
         on_delete=models.CASCADE,
         verbose_name='Автор публикации',
-        related_name='author_posts'
     )
     location = models.ForeignKey(
         'Location',
@@ -26,19 +25,18 @@ class Post(BaseModel):
         blank=True,
         null=True,
         verbose_name='Местоположение',
-        related_name='location_posts'
     )
     category = models.ForeignKey(
         'Category',
         on_delete=models.SET_NULL,
         null=True,
         verbose_name='Категория',
-        related_name='category_posts'
     )
 
     class Meta(BaseModel.Meta):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
+        default_related_name = 'posts'
 
     def __str__(self):
         return self.title[:30]
@@ -53,7 +51,7 @@ class Category(BaseModel):
         help_text='Идентификатор страницы для URL; разрешены символы латиницы,'
                   ' цифры, дефис и подчёркивание.')
 
-    class Meta:
+    class Meta(BaseModel.Meta):
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
 
@@ -64,7 +62,7 @@ class Category(BaseModel):
 class Location(BaseModel):
     name = models.CharField('Название места', max_length=256)
 
-    class Meta:
+    class Meta(BaseModel.Meta):
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 

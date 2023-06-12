@@ -23,7 +23,7 @@ def category_posts(request, category_slug):
         slug=category_slug
     )
 
-    post_list = category.category_posts.filter(
+    post_list = category.posts.filter(
         is_published=True,
         pub_date__lte=now()
     )
