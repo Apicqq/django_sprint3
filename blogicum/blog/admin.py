@@ -50,10 +50,15 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class AdminUser(BaseUserAdmin):
-    list_display = ('username', 'email', 'password', 'is_staff',)
+    list_display = ('username', 'email', 'password', 'is_staff',
+                    'posts_count',)
     search_fields = ('email',)
     ordering = ('username',)
     list_display_links = ('username',)
+
+    @admin.display(description='Кол-во постов у пользователя')
+    def posts_count(self, obj):
+        return obj.posts.count()
 
 
 admin.site.unregister(Group)
